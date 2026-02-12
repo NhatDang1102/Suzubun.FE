@@ -7,6 +7,7 @@ import Reader from './pages/Reader';
 import MusicPlayer from './pages/MusicPlayer';
 import Auth from './pages/Auth';
 import Settings from './pages/Settings';
+import Welcome from './pages/Welcome';
 import './assets/styles/main.scss';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/auth" element={<Auth />} />
+          <Route path="/welcome" element={<Welcome />} />
           
           <Route path="/*" element={
             <ProtectedRoute>
