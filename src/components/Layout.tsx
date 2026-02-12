@@ -1,7 +1,7 @@
 import React from 'react';
 import { Home, Music, BookOpen, Layers, User, Settings, Play, ShieldAlert } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import { Link, useLocation, NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const { isAdmin } = useAuth();
