@@ -1,13 +1,12 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { contentApi, Content, ContentLine } from '../api/contentService';
-import { Play, Pause, SkipForward, SkipBack, Repeat, Shuffle } from 'lucide-react';
+import { contentApi } from '../api/contentService';
+import type { Content, ContentLine } from '../api/contentService';
 
 const MusicPlayer = () => {
   const { id } = useParams<{ id: string }>();
   const [data, setData] = useState<{ content: Content; lines: ContentLine[] } | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -19,14 +18,6 @@ const MusicPlayer = () => {
   const handleTimeUpdate = () => {
     if (audioRef.current) {
       setCurrentTime(audioRef.current.currentTime);
-    }
-  };
-
-  const togglePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) audioRef.current.pause();
-      else audioRef.current.play();
-      setIsPlaying(!isPlaying);
     }
   };
 
@@ -73,7 +64,6 @@ const MusicPlayer = () => {
         ref={audioRef} 
         src={data.content.audioUrl} 
         onTimeUpdate={handleTimeUpdate}
-        onEnded={() => setIsPlaying(false)}
       />
     </div>
   );

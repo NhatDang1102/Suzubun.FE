@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Music, BookOpen, Layers, User, LogOut, Settings } from 'lucide-react';
+import { Home, Music, BookOpen, Layers, User, Settings } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const SidebarItem = ({ icon: Icon, label, path, active }: any) => (

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { contentApi, Content } from '../api/contentService';
+import { useEffect, useState } from 'react';
+import { contentApi } from '../api/contentService';
+import type { Content } from '../api/contentService';
 import { Link } from 'react-router-dom';
 import { PlayCircle, BookOpen } from 'lucide-react';
 
