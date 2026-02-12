@@ -1,95 +1,90 @@
 import React from 'react';
-import { Home, Music, BookOpen, Layers, User, Settings } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
-
-const SidebarItem = ({ icon: Icon, label, path, active }: any) => (
-  <Link to={path} className={`d-flex align-items-center p-3 text-decoration-none transition-all ${active ? 'text-white bg-primary rounded-3 shadow-sm' : 'text-secondary hover-white'}`}>
-    <Icon size={20} className="me-3" />
-    <span className="fw-medium">{label}</span>
-  </Link>
-);
+import { Home, Music, BookOpen, Layers, User, Settings, Play } from 'lucide-react';
+import { Link, useLocation, NavLink } from 'react-router-dom';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
 
   return (
-    <div className="container-fluid vh-100 p-0 bg-dark text-light overflow-hidden">
-      <div className="row g-0 h-100">
-        {/* Sidebar */}
-        <div className="col-auto bg-black border-end border-secondary border-opacity-25 px-3 py-4 d-none d-md-block" style={{ width: '260px' }}>
-          <div className="mb-5 px-3 d-flex align-items-center">
-            <div className="bg-primary p-2 rounded-circle me-2 d-flex align-items-center justify-content-center" style={{ width: '40px', height: '40px' }}>
-              <span className="fw-bold text-white fs-4">S</span>
-            </div>
-            <h4 className="m-0 fw-bold tracking-tight">Suzubun</h4>
-          </div>
-
-          <div className="nav flex-column gap-2">
-            <SidebarItem icon={Home} label="Trang chủ" path="/" active={location.pathname === '/'} />
-            <SidebarItem icon={BookOpen} label="Bài báo & Truyện" path="/articles" active={location.pathname === '/articles'} />
-            <SidebarItem icon={Music} label="Âm nhạc" path="/music" active={location.pathname === '/music'} />
-            <SidebarItem icon={Layers} label="Flashcards" path="/flashcards" active={location.pathname === '/flashcards'} />
-          </div>
-
-          <div className="mt-auto pt-5 border-top border-secondary border-opacity-10">
-            <SidebarItem icon={Settings} label="Cài đặt" path="/settings" active={location.pathname === '/settings'} />
-            <SidebarItem icon={User} label="Hồ sơ" path="/profile" active={location.pathname === '/profile'} />
-          </div>
+    <div className="d-flex vh-100 overflow-hidden bg-black">
+      {/* Sidebar */}
+      <nav className="sidebar d-none d-md-flex">
+        <div className="px-3 mb-4">
+          <h3 className="text-white fw-bold d-flex align-items-center gap-2">
+            <div className="bg-primary p-1 rounded-circle"><Music size={24} fill="white" /></div>
+            Suzubun
+          </h3>
+        </div>
+        
+        <div className="d-flex flex-column gap-1">
+          <NavLink to="/" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+            <Home size={24} /> <span>Trang chủ</span>
+          </NavLink>
+          <NavLink to="/articles" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+            <BookOpen size={24} /> <span>Bài báo</span>
+          </NavLink>
+          <NavLink to="/music" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+            <Music size={24} /> <span>Âm nhạc</span>
+          </NavLink>
+          <NavLink to="/flashcards" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+            <Layers size={24} /> <span>Thư viện từ</span>
+          </NavLink>
         </div>
 
-        {/* Main Content Area */}
-        <div className="col h-100 overflow-auto position-relative bg-gradient-dark">
-          {/* Top Navbar */}
-          <header className="sticky-top bg-dark bg-opacity-75 backdrop-blur px-4 py-3 d-flex justify-content-between align-items-center z-3 border-bottom border-secondary border-opacity-10">
-            <div className="d-flex gap-2">
-              <button className="btn btn-black-outline rounded-circle p-2" onClick={() => window.history.back()}>
-                <User size={18} />
-              </button>
-            </div>
-            <div className="d-flex align-items-center gap-3">
-              <button className="btn btn-outline-light rounded-pill px-4 btn-sm fw-bold">Nâng cấp</button>
-              <div className="dropdown">
-                <button className="btn btn-dark rounded-circle p-1 overflow-hidden shadow-sm" style={{ width: '35px', height: '35px' }}>
-                  <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Nhat" alt="avatar" className="w-100 h-100" />
-                </button>
-              </div>
-            </div>
-          </header>
-
-          <main className="p-4 h-100 pb-5 mb-5">
-            {children}
-          </main>
+        <div className="mt-auto pt-4 border-top border-secondary border-opacity-10">
+          <NavLink to="/settings" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
+            <Settings size={24} /> <span>Cài đặt</span>
+          </NavLink>
         </div>
+      </nav>
+
+      {/* Main View */}
+      <div className="flex-grow-1 d-flex flex-column overflow-hidden main-view">
+        <header className="px-4 py-3 d-flex justify-content-between align-items-center sticky-top backdrop-blur">
+          <div className="d-flex gap-2">
+            <button className="btn btn-black-outline rounded-circle p-2" onClick={() => window.history.back()}>
+              <User size={20} />
+            </button>
+          </div>
+          <div className="d-flex gap-3 align-items-center">
+            <button className="btn btn-white rounded-pill px-4 fw-bold btn-sm text-black bg-white">Upgrade</button>
+            <Link to="/settings" className="bg-dark p-1 rounded-circle overflow-hidden shadow" style={{ width: 32, height: 32 }}>
+              <img src="https://api.dicebear.com/7.x/pixel-art/svg?seed=Nhat" alt="avatar" className="w-100 h-100" />
+            </Link>
+          </div>
+        </header>
+
+        <main className="flex-grow-1 overflow-auto px-4 py-3 custom-scrollbar pb-5">
+          {children}
+          <div style={{ height: '100px' }}></div> {/* Spacer for player */}
+        </main>
       </div>
 
-      {/* Mini Music Player (Fixed at Bottom) */}
-      <div className="fixed-bottom bg-black border-top border-secondary border-opacity-25 px-4 py-2 d-flex align-items-center z-3 shadow-lg" style={{ height: '90px' }}>
-        <div className="d-flex align-items-center gap-3" style={{ width: '30%' }}>
-          <img src="https://via.placeholder.com/56" alt="song art" className="rounded-2 shadow-sm" />
+      {/* Player Bar */}
+      <div className="fixed-bottom player-bar d-flex align-items-center justify-content-between px-4">
+        <div className="d-flex align-items-center gap-3" style={{ minWidth: 180 }}>
+          <div className="bg-dark rounded shadow" style={{ width: 56, height: 56 }}></div>
           <div>
-            <h6 className="m-0 fw-bold">Tên bài hát đang phát</h6>
-            <small className="text-secondary">Ca sĩ</small>
+            <div className="fw-bold small">Chưa phát nhạc</div>
+            <div className="text-grey x-small">Suzubun Reader</div>
           </div>
         </div>
-        <div className="d-flex flex-column align-items-center gap-1" style={{ width: '40%' }}>
-          <div className="d-flex align-items-center gap-4 text-secondary">
-            <Layers size={18} className="hover-white cursor-pointer" />
-            <Music size={24} className="text-white hover-scale" />
-            <Layers size={18} className="hover-white cursor-pointer" />
+
+        <div className="d-flex flex-column align-items-center gap-2 flex-grow-1 max-w-lg">
+          <div className="d-flex align-items-center gap-4 text-grey">
+            <Play size={32} fill="white" className="text-white hover-scale cursor-pointer" />
           </div>
-          <div className="w-100 d-flex align-items-center gap-2 px-5">
-            <small className="text-secondary">0:45</small>
-            <div className="progress flex-grow-1" style={{ height: '4px' }}>
-              <div className="progress-bar bg-light" style={{ width: '30%' }}></div>
+          <div className="w-100 d-flex align-items-center gap-2">
+            <span className="x-small text-grey">0:00</span>
+            <div className="progress flex-grow-1" style={{ height: 4 }}>
+              <div className="progress-bar bg-white" style={{ width: '0%' }}></div>
             </div>
-            <small className="text-secondary">3:20</small>
+            <span className="x-small text-grey">0:00</span>
           </div>
         </div>
-        <div className="d-flex align-items-center justify-content-end gap-3" style={{ width: '30%' }}>
-          <Layers size={18} className="text-secondary" />
-          <div className="progress" style={{ height: '4px', width: '100px' }}>
-            <div className="progress-bar bg-light" style={{ width: '70%' }}></div>
-          </div>
+
+        <div className="d-flex justify-content-end" style={{ minWidth: 180 }}>
+          {/* Volume controls etc */}
         </div>
       </div>
     </div>
