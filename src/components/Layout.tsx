@@ -1,9 +1,10 @@
 import React from 'react';
-import { Home, Music, BookOpen, Layers, User, Settings, Play } from 'lucide-react';
+import { Home, Music, BookOpen, Layers, User, Settings, Play, ShieldAlert } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import { Link, useLocation, NavLink } from 'react-router-dom';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const location = useLocation();
+  const { isAdmin } = useAuth();
 
   return (
     <div className="d-flex vh-100 overflow-hidden bg-black">
@@ -29,6 +30,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <NavLink to="/flashcards" className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}>
             <Layers size={24} /> <span>Thư viện từ</span>
           </NavLink>
+          {isAdmin && (
+            <NavLink to="/admin" className={({ isActive }) => `sidebar-link text-warning ${isActive ? 'active' : ''}`}>
+              <ShieldAlert size={24} /> <span>Quản trị</span>
+            </NavLink>
+          )}
         </div>
 
         <div className="mt-auto pt-4 border-top border-secondary border-opacity-10">

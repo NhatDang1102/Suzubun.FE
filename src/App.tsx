@@ -8,16 +8,19 @@ import MusicPlayer from './pages/MusicPlayer';
 import Auth from './pages/Auth';
 import Settings from './pages/Settings';
 import Welcome from './pages/Welcome';
+import AdminDashboard from './pages/AdminDashboard';
 import './assets/styles/main.scss';
 
 // Component để bọc Layout vào các route bảo vệ
-const ProtectedLayout = () => (
-  <ProtectedRoute>
-    <Layout>
-      <Outlet />
-    </Layout>
-  </ProtectedRoute>
-);
+const ProtectedLayout = () => {
+  return (
+    <ProtectedRoute>
+      <Layout>
+        <Outlet />
+      </Layout>
+    </ProtectedRoute>
+  );
+};
 
 function App() {
   return (
@@ -34,6 +37,7 @@ function App() {
             <Route path="/reader/:id" element={<Reader />} />
             <Route path="/music/:id" element={<MusicPlayer />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/admin" element={<AdminDashboard />} />
           </Route>
 
           {/* Fallback 404 */}
